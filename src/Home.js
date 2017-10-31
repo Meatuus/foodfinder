@@ -3,17 +3,52 @@ import logo from './img/logo.svg';
 import './css/App.css';
 import Recipe from './containers/Recipe';
 
+
+
+
 class Home extends Component {
+    constructor() {
+        super();
+
+        this.state = {
+            ingredientsList: [
+                "onion",
+                "tomato",
+                "garlic",
+                "salt",
+                "pepper",
+                "basil",
+                "feta"
+            ],
+            newIngredient: ""
+        }
+    }
+
+    newIngredientChange(e) {
+        this.setState({
+            newIngredient: e.target.value
+        });
+    }
+    
+    addItem(e) {
+        e.preventDefault();
+        const list = this.state.ingredientsList;
+
+        if (this.state.newIngredient && !list.includes(this.state.newIngredient)) {
+            list.push(this.state.newIngredient);
+    
+            this.setState({
+                ingredientsList: list,
+                newIngredient: ""
+            })
+        } else {
+            alert("Please add new ingredient")
+        }
+    }
+
+    
     render() {
-        let list = [
-            "onion",
-            "tomato",
-            "garlic",
-            "salt",
-            "pepper",
-            "basil",
-            "feta"
-        ]
+        const {ingredientsList, newIngredient} = this.state;
 
         return (
             <div className="App">
@@ -24,7 +59,11 @@ class Home extends Component {
                 <p className="App-intro">
                     To get started, edit <code>src/App.js</code> and save to reload.
                 </p>
-                <Recipe ingredients={list} />
+                <Recipe ingredients={ingredientsList} />
+                <form>
+                    <input type="text" value={newIngredient} placeholder="Add Ingredient" onChange={(e) => this.newIngredientChange(e)}/>
+                    <button onClick={(e) => this.addItem(e)}></button>
+                </form>
             </div>
         );
     }

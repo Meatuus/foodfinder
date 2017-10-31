@@ -8,7 +8,7 @@ class Recipe extends Component {
         const {ingredients} = this.props
 
         const list = ingredients.map((item, index) => {
-            return <ListItem item={item} index={index}/>
+            return <ListItem item={item} key={index}/>
         })
 
         return (
