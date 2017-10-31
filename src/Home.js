@@ -17,11 +17,36 @@ class Home extends Component {
                 "garlic",
                 "salt",
                 "pepper",
-                "basil",
-                "feta"
+                "basil"
+                // {
+                //     "item": "onion",
+                //     "key": 0
+                // },
+                // {
+                //     "item": "tomato",
+                //     "key": 1
+                // },
+                // {
+                //     "item": "garlic",
+                //     "key": 2
+                // },
+                // {
+                //     "item": "salt",
+                //     "key": 3
+                // },
+                // {
+                //     "item": "pepper",
+                //     "key": 4
+                // },
+                // {
+                //     "item": "basil",
+                //     "key": 5
+                // }
             ],
             newIngredient: ""
         }
+
+        this.deleteItem = this.deleteItem.bind(this);
     }
 
     newIngredientChange(e) {
@@ -46,6 +71,22 @@ class Home extends Component {
         }
     }
 
+    deleteItem(key) {
+        console.log("deleting ingredient!");
+        const list = this.state.ingredientsList;
+        list.splice(key, 1);
+
+        this.setState({
+            ingredientsList: list
+        });
+    }
+
+    clearList(e) {
+        console.log("Clearing List!");
+        this.setState({
+            ingredientsList: []
+        });
+    }
     
     render() {
         const {ingredientsList, newIngredient} = this.state;
@@ -56,14 +97,12 @@ class Home extends Component {
                     <img src={logo} className="App-logo" alt="logo" />
                     <h1 className="App-title">Recipe Finder</h1>
                 </header>
-                <p className="App-intro">
-                    To get started, edit <code>src/App.js</code> and save to reload.
-                </p>
-                <Recipe ingredients={ingredientsList} />
-                <form>
-                    <input type="text" value={newIngredient} placeholder="Add Ingredient" onChange={(e) => this.newIngredientChange(e)}/>
-                    <button onClick={(e) => this.addItem(e)}></button>
+                <Recipe ingredients={ingredientsList} onDelete={this.deleteItem} />
+                <form className="App-intro">
+                    <input type="text" value={newIngredient} placeholder="New Ingredient" onChange={(e) => this.newIngredientChange(e)}/>
+                    <button onClick={(e) => this.addItem(e)}>Add</button>
                 </form>
+                <button onClick={(e) => this.clearList(e)}>Clear the list!</button>
             </div>
         );
     }

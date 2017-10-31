@@ -6,7 +6,7 @@ class ListItem extends Component {
         const {item} = this.props;
 
         return (
-            <li>{item}</li>
+            <p>{item}</p>
         );
     }
 }
