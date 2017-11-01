@@ -6,6 +6,13 @@ import {url, key, id} from './foodApi';
 
 import {data} from './recipeData';
 
+const combineIngredients = function(array) {
+    let result = array.reduce(function (accumulator, currentValue) {
+        return `${accumulator},${currentValue}`;
+    });
+    return result
+}
+
 class Home extends Component {
     constructor() {
         super();
@@ -20,9 +27,11 @@ class Home extends Component {
                 "basil"
             ],
             newIngredient: "",
+            extrasAllowed: 0,
             recipes: data
         }
 
+        // this.combineIngredients = this.combineIngredients.bind(this);
         this.deleteItem = this.deleteItem.bind(this);
         this.recipeSearch = this.recipeSearch.bind(this);
     }
@@ -31,6 +40,10 @@ class Home extends Component {
         this.setState({
             newIngredient: e.target.value
         });
+    }
+
+    newExtrasAllowedChange(e) {
+        this.setState({ extrasAllowed: e.target.value })
     }
     
     addItem(e) {
@@ -47,6 +60,8 @@ class Home extends Component {
         } else {
             alert("Please add new ingredient")
         }
+
+        // console.log(combineIngredients(this.state.ingredientsList)); 
     }
 
     deleteItem(key) {
@@ -66,13 +81,15 @@ class Home extends Component {
         });
     }
 
+
+
     recipeSearch(e) {
         console.log('searching...');
         console.log(url);
         console.log(key);
         console.log(id);
        
-        fetch(`${url}?q=tomato,basil,onion,salt,pepper&app_id=${id}&app_key=${key}`)
+        fetch(`${url}?q=${combineIngredients(this.state.ingredientsList)}&app_id=${id}&app_key=${key}&ingr=${this.state.ingredientsList.length + parseInt(this.state.extrasAllowed)}`)
             .then((response) => {
                 return response.json()
             })
@@ -83,31 +100,24 @@ class Home extends Component {
             .catch((ex) => {
                 console.log('An error occured while parsing!', ex);
             })
-
-        // fetch('http://api.openweathermap.org/data/2.5/weather?zip=85001,us&appid=052f26926ae9784c2d677ca7bc5dec98&&units=imperial')
-        //     .then((response) => {
-        //         return response.json()
-        //     }).then((json) => {
-        //         console.log(json);
-        //         // base.setState({
-        //         //     city: json.name,
-        //         //     description: json.weather[0].description,
-        //         //     highTemp: json.main.temp_max,
-        //         //     lowTemp: json.main.temp_min
-        //         // });
-        //     }).catch((ex) => {
-        //         console.log('An error occured while parsing!', ex)
-        //     });
-
-        // https://api.edamam.com/search?q=tomato,basil,olive oil,onion,salt,pepper&app_id=d95b6206&app_key=705d712b9853abe39d95ed9f28ddfff8&ingr=6
-
     }
     
     render() {
-        const {ingredientsList, newIngredient, recipes} = this.state;
+        const {ingredientsList, newIngredient, extrasAllowed, recipes} = this.state;
 
         const matches = recipes.map((recipe, index) => {
-            return <li className="recipes__item" key={index}>{recipe.recipe.label}</li>
+            return <li className="recipes__item" key={index}>
+                <h3>{recipe.recipe.label}</h3>
+                <a href={recipe.recipe.url} target="_blank">View Recipe</a>
+                <div>
+                    <img src={recipe.recipe.image} alt=""/>
+                </div>
+                <ul>
+                    {recipe.recipe.ingredientLines.map((ing, key) => {
+                        return <li key={key}>{ing}</li>
+                    })}
+                </ul>
+            </li>
         })
 
         return (
@@ -119,9 +129,14 @@ class Home extends Component {
                 <div className="ingredient">
                     <h2 className="ingredient__title">Enter Your Ingredients</h2>
                     <form className="ingredient__form">
-                        <input className="ingredient__input" type="text" value={newIngredient} placeholder="New Ingredient" onChange={(e) => this.newIngredientChange(e)}/>
+                        <input className="ingredient__input" type="text" value={newIngredient} placeholder="New Ingredient" onChange={(e) => this.newIngredientChange(e)}/>                        
                         <button className="ingredient__btn" onClick={(e) => this.addItem(e)}>Add</button>
                     </form>
+                    <label>
+                        Number of extra ingredients in results: 
+                        <input className="ingredient__input" type="text" value={extrasAllowed} onChange={(e) => this.newExtrasAllowedChange(e)} />
+                    </label>
+                    {/* <button className="ingredient__btn" onClick={(e) => this.addItem(e)}>Add</button> */}
                 </div>
                 <section className="ingredient__section">
                     <Recipe ingredients={ingredientsList} onDelete={this.deleteItem} />
