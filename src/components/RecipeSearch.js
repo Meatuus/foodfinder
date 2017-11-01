@@ -19,7 +19,7 @@ class RecipeSearch extends Component {
         const { ingredientsList, extrasAllowed, onNewRecipes } = this.props;
 
         console.log('searching...');
-        fetch(`${url}?q=${combineIngredients(ingredientsList)}&app_id=${id}&app_key=${key}&ingr=${ingredientsList.length + parseInt(extrasAllowed, 10)}`)
+        fetch(`${url}?q=${ingredientsList.length > 1 ? combineIngredients(ingredientsList) : ingredientsList[0]}&app_id=${id}&app_key=${key}&ingr=${ingredientsList.length + parseInt(extrasAllowed, 10)}&to=30`)
             .then((response) => {
                 return response.json()
             })
