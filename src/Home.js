@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import logo from './img/logo.svg';
 import './css/App.css';
 import IngredientsContainer from './containers/IngredientsContainer';
-import RecipeSearch from './containers/RecipeSearch';
+import RecipeContainer from './containers/RecipeContainer';
 
 class Home extends Component {
     constructor() {
@@ -92,7 +92,7 @@ class Home extends Component {
                     <IngredientsContainer ingredients={ingredientsList} onDelete={this.deleteItem} />
                     <button className="ingredient__clear" onClick={(e) => this.clearList(e)}>Clear the list!</button>
                 </section>
-                <RecipeSearch ingredientsList={ingredientsList} extrasAllowed={extrasAllowed} />
+                <RecipeContainer ingredientsList={ingredientsList} extrasAllowed={extrasAllowed} />
             </div>
         );
     }
