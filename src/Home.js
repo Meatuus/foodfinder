@@ -31,7 +31,6 @@ class Home extends Component {
             recipes: data
         }
 
-        // this.combineIngredients = this.combineIngredients.bind(this);
         this.deleteItem = this.deleteItem.bind(this);
         this.recipeSearch = this.recipeSearch.bind(this);
     }
@@ -60,8 +59,6 @@ class Home extends Component {
         } else {
             alert("Please add new ingredient")
         }
-
-        // console.log(combineIngredients(this.state.ingredientsList)); 
     }
 
     deleteItem(key) {
@@ -80,8 +77,6 @@ class Home extends Component {
             ingredientsList: []
         });
     }
-
-
 
     recipeSearch(e) {
         console.log('searching...');
@@ -136,7 +131,6 @@ class Home extends Component {
                         Number of extra ingredients in results: 
                         <input className="ingredient__input" type="text" value={extrasAllowed} onChange={(e) => this.newExtrasAllowedChange(e)} />
                     </label>
-                    {/* <button className="ingredient__btn" onClick={(e) => this.addItem(e)}>Add</button> */}
                 </div>
                 <section className="ingredient__section">
                     <Recipe ingredients={ingredientsList} onDelete={this.deleteItem} />
