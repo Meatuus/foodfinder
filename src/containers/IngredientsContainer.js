@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import ListItem from '../components/ListItem';
 
-class Recipe extends Component {
+class IngredientsContainer extends Component {
     constructor() {
         super();
 
@@ -28,4 +28,4 @@ class Recipe extends Component {
     }
 }
 
-export default Recipe;
+export default IngredientsContainer;
