@@ -2,14 +2,14 @@ import React, { Component } from 'react';
 import RecipeSearch from '../components/RecipeSearch';
 import RecipeList from '../components/RecipeList';
 
-import { data } from '../recipeData';
+// import { data } from '../recipeData';
 
 class RecipeContainer extends Component {
     constructor() {
         super();
 
         this.state = {
-            recipes: data
+            recipes: []
         }
 
         this.handleNewRecipes = this.handleNewRecipes.bind(this);

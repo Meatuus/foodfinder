@@ -64,6 +64,10 @@
     cursor: pointer;
 }
 
+.ingredient__clear.invisible {
+    display: none;
+}
+
 .ingredient__list {
     display: flex;
     flex-direction: column;

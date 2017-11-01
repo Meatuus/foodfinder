@@ -10,12 +10,12 @@ class Home extends Component {
 
         this.state = {
             ingredientsList: [
-                "onion",
-                "tomato",
-                "garlic",
-                "salt",
-                "pepper",
-                "basil"
+                // "onion",
+                // "tomato",
+                // "garlic",
+                // "salt",
+                // "pepper",
+                // "basil"
             ],
             newIngredient: "",
             extrasAllowed: 0
@@ -90,7 +90,7 @@ class Home extends Component {
                 </div>
                 <section className="ingredient__section">
                     <IngredientsContainer ingredients={ingredientsList} onDelete={this.deleteItem} />
-                    <button className="ingredient__clear" onClick={(e) => this.clearList(e)}>Clear the list!</button>
+                    <button className={ingredientsList.length ? "ingredient__clear" : "ingredient__clear invisible"} onClick={(e) => this.clearList(e)}>Clear the list!</button>
                 </section>
                 <RecipeContainer ingredientsList={ingredientsList} extrasAllowed={extrasAllowed} />
             </div>
