@@ -4,6 +4,8 @@ import './css/App.css';
 import Recipe from './containers/Recipe';
 import {url, key, id} from './foodApi';
 
+import {data} from './recipeData';
+
 class Home extends Component {
     constructor() {
         super();
@@ -17,7 +19,8 @@ class Home extends Component {
                 "pepper",
                 "basil"
             ],
-            newIngredient: ""
+            newIngredient: "",
+            recipes: data
         }
 
         this.deleteItem = this.deleteItem.bind(this);
@@ -70,12 +73,12 @@ class Home extends Component {
         console.log(id);
        
         fetch(`${url}?q=tomato,basil,onion,salt,pepper&app_id=${id}&app_key=${key}`)
-        // fetch('https://api.edamam.com/search?q=tomato,basil,onion,salt,pepper&app_id=d95b6206&app_key=705d712b9853abe39d95ed9f28ddfff8&ingr=6')
             .then((response) => {
                 return response.json()
             })
             .then((json) => {
                 console.log(json);
+                this.setState({ recipes: json.hits })
             })
             .catch((ex) => {
                 console.log('An error occured while parsing!', ex);
@@ -101,7 +104,11 @@ class Home extends Component {
     }
     
     render() {
-        const {ingredientsList, newIngredient} = this.state;
+        const {ingredientsList, newIngredient, recipes} = this.state;
+
+        const matches = recipes.map((recipe, index) => {
+            return <li key={index}>{recipe.recipe.label}</li>
+        })
 
         return (
             <div className="App">
@@ -117,6 +124,9 @@ class Home extends Component {
                 <button onClick={(e) => this.clearList(e)}>Clear the list!</button>
                 <div>
                     <button onClick={(e) => this.recipeSearch(e)}>Search</button>
+                    <ul>
+                        {matches}
+                    </ul>
                 </div>
             </div>
         );
