@@ -83,9 +83,9 @@ class Home extends Component {
                         <input className="ingredient__input" type="text" value={newIngredient} placeholder="New Ingredient" onChange={(e) => this.newIngredientChange(e)}/>                        
                         <button className="ingredient__btn" onClick={(e) => this.addItem(e)}>Add</button>
                     </form>
-                    <label>
+                    <label className="ingredient__extras-label">
                         Number of extra ingredients in results: 
-                        <input className="ingredient__input" type="text" value={extrasAllowed} onChange={(e) => this.newExtrasAllowedChange(e)} />
+                        <input className="ingredient__extras" type="text" value={extrasAllowed} onChange={(e) => this.newExtrasAllowedChange(e)} />
                     </label>
                 </div>
                 <section className="ingredient__section">

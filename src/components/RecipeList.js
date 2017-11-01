@@ -6,16 +6,20 @@ class RecipeList extends Component {
 
         const matches = recipes.map((recipe, index) => {
             return <li className="recipes__item" key={index}>
-                <h3>{recipe.recipe.label}</h3>
-                <a href={recipe.recipe.url} target="_blank">View Recipe</a>
-                <div>
-                    <img src={recipe.recipe.image} alt="" />
+                <h3 className="recipe__title">{recipe.recipe.label}</h3>
+                <div className="recipe__container">
+                    <div className="recipe__image-wrap">
+                        <img className="recipe__image" src={recipe.recipe.image} alt="" />
+                    </div>
+                    <div className="recipe__info">
+                        <ul className="recipe__ing-list">
+                            {recipe.recipe.ingredientLines.map((ing, key) => {
+                                return <li className="recipe__ing-item" key={key}>{ing}</li>
+                            })}
+                        </ul>
+                        <a className="recipe__link" href={recipe.recipe.url} target="_blank">View Recipe</a>
+                    </div>
                 </div>
-                <ul>
-                    {recipe.recipe.ingredientLines.map((ing, key) => {
-                        return <li key={key}>{ing}</li>
-                    })}
-                </ul>
             </li>
         })
 
