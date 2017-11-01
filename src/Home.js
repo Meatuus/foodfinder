@@ -2,9 +2,7 @@ import React, { Component } from 'react';
 import logo from './img/logo.svg';
 import './css/App.css';
 import Recipe from './containers/Recipe';
-
-
-
+import {url, key, id} from './foodApi';
 
 class Home extends Component {
     constructor() {
@@ -18,35 +16,12 @@ class Home extends Component {
                 "salt",
                 "pepper",
                 "basil"
-                // {
-                //     "item": "onion",
-                //     "key": 0
-                // },
-                // {
-                //     "item": "tomato",
-                //     "key": 1
-                // },
-                // {
-                //     "item": "garlic",
-                //     "key": 2
-                // },
-                // {
-                //     "item": "salt",
-                //     "key": 3
-                // },
-                // {
-                //     "item": "pepper",
-                //     "key": 4
-                // },
-                // {
-                //     "item": "basil",
-                //     "key": 5
-                // }
             ],
             newIngredient: ""
         }
 
         this.deleteItem = this.deleteItem.bind(this);
+        this.recipeSearch = this.recipeSearch.bind(this);
     }
 
     newIngredientChange(e) {
@@ -87,6 +62,43 @@ class Home extends Component {
             ingredientsList: []
         });
     }
+
+    recipeSearch(e) {
+        console.log('searching...');
+        console.log(url);
+        console.log(key);
+        console.log(id);
+       
+        fetch(`${url}?q=tomato,basil,onion,salt,pepper&app_id=${id}&app_key=${key}`)
+        // fetch('https://api.edamam.com/search?q=tomato,basil,onion,salt,pepper&app_id=d95b6206&app_key=705d712b9853abe39d95ed9f28ddfff8&ingr=6')
+            .then((response) => {
+                return response.json()
+            })
+            .then((json) => {
+                console.log(json);
+            })
+            .catch((ex) => {
+                console.log('An error occured while parsing!', ex);
+            })
+
+        // fetch('http://api.openweathermap.org/data/2.5/weather?zip=85001,us&appid=052f26926ae9784c2d677ca7bc5dec98&&units=imperial')
+        //     .then((response) => {
+        //         return response.json()
+        //     }).then((json) => {
+        //         console.log(json);
+        //         // base.setState({
+        //         //     city: json.name,
+        //         //     description: json.weather[0].description,
+        //         //     highTemp: json.main.temp_max,
+        //         //     lowTemp: json.main.temp_min
+        //         // });
+        //     }).catch((ex) => {
+        //         console.log('An error occured while parsing!', ex)
+        //     });
+
+        // https://api.edamam.com/search?q=tomato,basil,olive oil,onion,salt,pepper&app_id=d95b6206&app_key=705d712b9853abe39d95ed9f28ddfff8&ingr=6
+
+    }
     
     render() {
         const {ingredientsList, newIngredient} = this.state;
@@ -103,6 +115,9 @@ class Home extends Component {
                     <button onClick={(e) => this.addItem(e)}>Add</button>
                 </form>
                 <button onClick={(e) => this.clearList(e)}>Clear the list!</button>
+                <div>
+                    <button onClick={(e) => this.recipeSearch(e)}>Search</button>
+                </div>
             </div>
         );
     }
