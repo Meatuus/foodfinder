@@ -17,11 +17,11 @@ class Recipe extends Component {
         const {ingredients} = this.props
 
         const list = ingredients.map((item, index) => {
-            return <li key={index}><ListItem item={item} /> <button onClick={(e) => this.removeItem(index, e)}>X</button></li>
+            return <li className="ingredient__item" key={index}><ListItem item={item} /> <button onClick={(e) => this.removeItem(index, e)}>X</button></li>
         })
 
         return (
-            <ul>
+            <ul className="ingredient__list">
                 {list}
             </ul>
         );

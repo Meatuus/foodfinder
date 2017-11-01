@@ -107,7 +107,7 @@ class Home extends Component {
         const {ingredientsList, newIngredient, recipes} = this.state;
 
         const matches = recipes.map((recipe, index) => {
-            return <li key={index}>{recipe.recipe.label}</li>
+            return <li className="recipes__item" key={index}>{recipe.recipe.label}</li>
         })
 
         return (
@@ -116,15 +116,23 @@ class Home extends Component {
                     <img src={logo} className="App-logo" alt="logo" />
                     <h1 className="App-title">Recipe Finder</h1>
                 </header>
-                <Recipe ingredients={ingredientsList} onDelete={this.deleteItem} />
-                <form className="App-intro">
-                    <input type="text" value={newIngredient} placeholder="New Ingredient" onChange={(e) => this.newIngredientChange(e)}/>
-                    <button onClick={(e) => this.addItem(e)}>Add</button>
-                </form>
-                <button onClick={(e) => this.clearList(e)}>Clear the list!</button>
-                <div>
-                    <button onClick={(e) => this.recipeSearch(e)}>Search</button>
-                    <ul>
+                <div className="ingredient">
+                    <h2 className="ingredient__title">Enter Your Ingredients</h2>
+                    <form className="ingredient__form">
+                        <input className="ingredient__input" type="text" value={newIngredient} placeholder="New Ingredient" onChange={(e) => this.newIngredientChange(e)}/>
+                        <button className="ingredient__btn" onClick={(e) => this.addItem(e)}>Add</button>
+                    </form>
+                </div>
+                <section className="ingredient__section">
+                    <Recipe ingredients={ingredientsList} onDelete={this.deleteItem} />
+                    <button className="ingredient__clear" onClick={(e) => this.clearList(e)}>Clear the list!</button>
+                </section>
+                <div className="recipes">
+                    <div className="recipes__heading">
+                        <h2 className="recipes__title">Lets Find Some Recipes</h2>
+                        <button className="recipes__search" onClick={(e) => this.recipeSearch(e)}>Search</button>
+                    </div>
+                    <ul className="recipes__list">
                         {matches}
                     </ul>
                 </div>
