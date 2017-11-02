@@ -26,6 +26,7 @@ class Home extends Component {
         this.handleNewIngredient = this.handleNewIngredient.bind(this);
         this.handleExtrasChange = this.handleExtrasChange.bind(this);
         this.deleteItem = this.deleteItem.bind(this);
+        this.handleClearList = this.handleClearList.bind(this);
     }
 
     handleIngredientAdd(ingredients) {
@@ -54,10 +55,9 @@ class Home extends Component {
         });
     }
 
-    clearList(e) {
-        console.log("Clearing List!");
+    handleClearList(list) {
         this.setState({
-            ingredientsList: []
+            ingredientsList: list
         });
     }
     
@@ -78,11 +78,7 @@ class Home extends Component {
                     onNewIngredient={this.handleNewIngredient}
                     onExtrasChange={this.handleExtrasChange}
                 />
-                {/* ingredients list */}
-                <section className="ingredient__section">
-                    <IngredientsContainer ingredients={ingredientsList} onDelete={this.deleteItem} />
-                    <button className={ingredientsList.length ? "ingredient__clear" : "ingredient__clear invisible"} onClick={(e) => this.clearList(e)}>Clear the list!</button>
-                </section>
+                <IngredientsContainer ingredients={ingredientsList} onDelete={this.deleteItem} onClearList={this.handleClearList} />
                 <RecipeContainer ingredientsList={ingredientsList} extrasAllowed={extrasAllowed} />
             </div>
         );

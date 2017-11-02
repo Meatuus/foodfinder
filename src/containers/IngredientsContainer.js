@@ -1,15 +1,21 @@
 import React, { Component } from 'react';
 import ListItem from '../components/ListItem';
+import ClearListBtn from '../components/ClearListBtn';
 
 class IngredientsContainer extends Component {
     constructor() {
         super();
 
         this.removeItem = this.removeItem.bind(this);
+        this.handleClearList = this.handleClearList.bind(this);
     }
 
     removeItem(index) {
         this.props.onDelete(index);
+    }
+
+    handleClearList(list) {
+        this.props.onClearList(list)
     }
 
     render() {
@@ -21,9 +27,15 @@ class IngredientsContainer extends Component {
         })
 
         return (
-            <ul className="ingredient__list">
-                {list}
-            </ul>
+            <section className="ingredient__section">
+                <ul className="ingredient__list">
+                    {list}
+                </ul>
+                <ClearListBtn 
+                    className={ingredients.length ? "ingredient__clear" : "ingredient__clear invisible"} 
+                    onClear={this.handleClearList}
+                />
+            </section>
         );
     }
 }
