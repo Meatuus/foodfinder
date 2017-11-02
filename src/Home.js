@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import logo from './img/logo.svg';
 import './css/App.css';
+import IngredientsForm from './components/IngredientsForm';
 import IngredientsContainer from './containers/IngredientsContainer';
 import RecipeContainer from './containers/RecipeContainer';
 
@@ -21,35 +22,27 @@ class Home extends Component {
             extrasAllowed: 0
         }
 
+        this.handleIngredientAdd = this.handleIngredientAdd.bind(this);
+        this.handleNewIngredient = this.handleNewIngredient.bind(this);
+        this.handleExtrasChange = this.handleExtrasChange.bind(this);
         this.deleteItem = this.deleteItem.bind(this);
     }
 
-    newIngredientChange(e) {
+    handleIngredientAdd(ingredients) {
+        this.setState({ingredientsList: ingredients});
+    }
+
+    handleNewIngredient(item) {
         this.setState({
-            newIngredient: e.target.value
+            newIngredient: item
         });
     }
 
-    newExtrasAllowedChange(e) {
-        this.setState({ extrasAllowed: e.target.value })
+    handleExtrasChange(num) {
+        this.setState({extrasAllowed: num});
     }
-    
-    addItem(e) {
-        e.preventDefault();
-        const list = this.state.ingredientsList;
 
-        if (this.state.newIngredient && !list.includes(this.state.newIngredient)) {
-            list.push(this.state.newIngredient);
-    
-            this.setState({
-                ingredientsList: list,
-                newIngredient: ""
-            })
-        } else {
-            alert("Please add new ingredient")
-        }
-        console.log('ingredient added!');
-    }
+
 
     deleteItem(key) {
         console.log("deleting ingredient!");
@@ -77,17 +70,15 @@ class Home extends Component {
                     <img src={logo} className="App-logo" alt="logo" />
                     <h1 className="App-title">Recipe Finder</h1>
                 </header>
-                <div className="ingredient">
-                    <h2 className="ingredient__title">Enter Your Ingredients</h2>
-                    <form className="ingredient__form">
-                        <input className="ingredient__input" type="text" value={newIngredient} placeholder="New Ingredient" onChange={(e) => this.newIngredientChange(e)}/>                        
-                        <button className="ingredient__btn" onClick={(e) => this.addItem(e)}>Add</button>
-                    </form>
-                    <label className="ingredient__extras-label">
-                        Number of extra ingredients in results: 
-                        <input className="ingredient__extras" type="text" value={extrasAllowed} onChange={(e) => this.newExtrasAllowedChange(e)} />
-                    </label>
-                </div>
+                <IngredientsForm 
+                    ingredientsList={ingredientsList}
+                    newIngredient={newIngredient} 
+                    extrasAllowed={extrasAllowed} 
+                    onAddItem={this.handleIngredientAdd}
+                    onNewIngredient={this.handleNewIngredient}
+                    onExtrasChange={this.handleExtrasChange}
+                />
+                {/* ingredients list */}
                 <section className="ingredient__section">
                     <IngredientsContainer ingredients={ingredientsList} onDelete={this.deleteItem} />
                     <button className={ingredientsList.length ? "ingredient__clear" : "ingredient__clear invisible"} onClick={(e) => this.clearList(e)}>Clear the list!</button>
